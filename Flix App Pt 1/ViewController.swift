@@ -53,6 +53,18 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         cell.synopsisView.text = synoposis
         return cell
     }
+    //Used for the navigation section-- sends info of all the movies to the next screen/view controller to be used for blurbs of the given movies in the given indexes in the api dictionary
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?){
+        let cell = sender as! UITableViewCell
+        let indexPath = tableView.indexPath(for: cell)!
+        let movie = movies[indexPath.row]
+        //Making a view controller object that inherits MoviesDetailsViewController so that we could send movies to the second screen
+        let detailsViewController = segue.destination as! MovieDetailsViewController
+        //Sends the movie in the given row indicated by indexPath by retrieving the movie in the given indexPath.row in the movies dictionary
+        detailsViewController.movie = movie
+        //Deselecting to clean up how a row remains clicked when we return to it from the second screen
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
 
 
 }
